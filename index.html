@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600&display=swap" rel="stylesheet" />
+        <style>
+            span {
+                font-family: "Inter", sans-serif;
+                color: white;
+            }
+
+            html {
+                background-color: rgb(14, 14, 14);
+            }
+
+            .message {
+                position: relative;
+            }
+
+            .text::before {
+                content: "\00a0";
+            }
+
+            .text {
+                border-radius: 1px;
+            }
+
+            .text::after {
+                content: "\00a0";
+            }
+
+            .username::after {
+                content: "\00a0";
+            }
+
+            .upvote-1 {
+                /* 1+ */
+                background-color: #FF00FF;
+            }
+
+            .upvote-2 {
+                /* 25+ */
+                background-color: #00FF00;
+            }
+
+            .upvote-3 {
+                /* 100+ */
+                background-color: #FFFF00;
+            }
+
+            .upvote-4 {
+                /* 1000+ */
+                background-color: #FFFFFF;
+            }
+
+            #jump {
+                position: fixed;
+                width: 100%;
+                text-align: center;
+                bottom: 50px;
+            }
+
+            #jump a {
+                display: inline-block;
+            }
+
+            #jump ion-icon {
+                height: 50px;
+                width: 50px;
+            }
+
+            .hide {
+                display: none;
+            }
+
+            ion-icon {
+                color: white;
+            }
+        </style>
+        <script src="https://unpkg.com/ionicons@5.1.2/dist/ionicons.js"></script>
+        <script src="koi.js"></script>
+    </head>
+
+    <body>
+        <div id="chatbox"></div>
+        <div id="jump" class="hide">
+            <a onclick="jumpbottom();">
+                <ion-icon name="arrow-down-circle"></ion-icon>
+            </a>
+        </div>
+    </body>
+
+    <footer>
+        <script src="chat.js"></script>
+    </footer>
+
+</html>
