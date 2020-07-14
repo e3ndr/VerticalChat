@@ -27,12 +27,13 @@ function postLogin() {
     });
 }
 
-console.log("Vertical chat v1.1.0 https://github.com/e3ndr/VerticalChat");
+console.log("Vertical chat v1.1.1 https://github.com/e3ndr/VerticalChat");
 console.log(" - Supports chat messages");
 console.log(" - Supports shares");
 console.log(" - Supports donations");
 console.log(" - Supports viewers");
 console.log(" - Supports sending messages");
+console.log(" - Fixed signout bug");
 
 window.addEventListener("scroll", checkScroll);
 
@@ -84,6 +85,7 @@ document.querySelector("#loginanon").addEventListener("click", () => {
 
 document.querySelector("#signout").addEventListener("click", () => {
     deleteCookie("refresh_token");
+    deleteCookie("watching");
     window.location.reload();
 });
 
