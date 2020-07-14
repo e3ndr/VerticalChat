@@ -88,7 +88,13 @@ class Koi {
             user: user
         };
 
-        this.ws.send(JSON.stringify(json));
+        if (this.isAlive()) {
+            this.ws.send(JSON.stringify(json));
+        } else {
+            this.addEventListener("open", () => {
+                this.ws.send(JSON.stringify(json));
+            });
+        }
     }
 
     test(user, event) {
@@ -98,7 +104,13 @@ class Koi {
             user: user
         };
 
-        this.ws.send(JSON.stringify(json));
+        if (this.isAlive()) {
+            this.ws.send(JSON.stringify(json));
+        } else {
+            this.addEventListener("open", () => {
+                this.ws.send(JSON.stringify(json));
+            });
+        }
     }
 
     removeUser(user) {
@@ -107,7 +119,13 @@ class Koi {
             user: user
         };
 
-        this.ws.send(JSON.stringify(json));
+        if (this.isAlive()) {
+            this.ws.send(JSON.stringify(json));
+        } else {
+            this.addEventListener("open", () => {
+                this.ws.send(JSON.stringify(json));
+            });
+        }
     }
 
     close() {

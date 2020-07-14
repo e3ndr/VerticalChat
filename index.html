@@ -3,6 +3,7 @@
 
     <head>
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600&display=swap" rel="stylesheet" />
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.0/css/bulma.css" rel="stylesheet" />
         <style>
             span {
                 font-family: "Inter", sans-serif;
@@ -13,7 +14,7 @@
                 background-color: rgb(14, 14, 14);
             }
 
-            .message {
+            .chatmessage {
                 position: relative;
             }
 
@@ -39,7 +40,7 @@
             }
 
             .upvote-2 {
-                /* 25+ */
+                /* 10+ */
                 background-color: #00FF00;
             }
 
@@ -76,17 +77,197 @@
             ion-icon {
                 color: white;
             }
+
+            .input::placeholder {
+                color: grey;
+            }
+
+            .status {
+                font-style: italic;
+            }
+
+            .status .text {
+                color: #D0D0D0;
+            }
+
+            #chatbox {
+                padding-bottom: 50px;
+                padding-top: 50px;
+                background-color: rgb(14, 14, 14);
+            }
+
+            .chatimage {
+                height: 20px;
+            }
+
+            #donationsbox {
+                width: 100vw;
+                position: fixed;
+                height: 50px;
+                top: 0;
+                background-color: rgb(14, 14, 14);
+            }
+
+            #send {
+                width: 100vw;
+                position: fixed;
+                height: 50px;
+                bottom: 0;
+                background-color: rgb(14, 14, 14);
+            }
+
+            #send [type=text] {
+                width: 93.5%;
+            }
+
+            #send [type=submit] {
+                width: 5%;
+                right: 0;
+            }
+
+            #send input {
+                border-color: black;
+                background-color: rgb(25, 25, 25);
+                color: white;
+            }
+
+            #signout {
+                position: fixed;
+                right: 15px;
+                top: 10px;
+                border-color: black;
+                background-color: rgb(25, 25, 25);
+                color: white;
+            }
+
+            #login {
+                width: 25vw;
+            }
+
+            #login input {
+                border-color: black;
+                background-color: rgb(25, 25, 25);
+                color: white;
+            }
         </style>
         <script src="https://unpkg.com/ionicons@5.1.2/dist/ionicons.js"></script>
         <script src="koi.js"></script>
+        <script src="caffeine.js"></script>
     </head>
 
     <body>
-        <div id="chatbox"></div>
-        <div id="jump" class="hide">
-            <a onclick="jumpbottom();">
-                <ion-icon name="arrow-down-circle"></ion-icon>
-            </a>
+        <div class="container" id="loading">
+            <!-- https://tobiasahlin.com/spinkit/ -->
+            <style>
+                .spinner {
+                    margin: 100px auto;
+                    width: 40px;
+                    height: 40px;
+                    position: relative;
+                    text-align: center;
+
+                    -webkit-animation: sk-rotate 2.0s infinite linear;
+                    animation: sk-rotate 2.0s infinite linear;
+                }
+
+                .dot1,
+                .dot2 {
+                    width: 60%;
+                    height: 60%;
+                    display: inline-block;
+                    position: absolute;
+                    top: 0;
+                    background-color: #333;
+                    border-radius: 100%;
+
+                    -webkit-animation: sk-bounce 2.0s infinite ease-in-out;
+                    animation: sk-bounce 2.0s infinite ease-in-out;
+                }
+
+                .dot2 {
+                    top: auto;
+                    bottom: 0;
+                    -webkit-animation-delay: -1.0s;
+                    animation-delay: -1.0s;
+                }
+
+                @-webkit-keyframes sk-rotate {
+                    100% {
+                        -webkit-transform: rotate(360deg)
+                    }
+                }
+
+                @keyframes sk-rotate {
+                    100% {
+                        transform: rotate(360deg);
+                        -webkit-transform: rotate(360deg)
+                    }
+                }
+
+                @-webkit-keyframes sk-bounce {
+
+                    0%,
+                    100% {
+                        -webkit-transform: scale(0.0)
+                    }
+
+                    50% {
+                        -webkit-transform: scale(1.0)
+                    }
+                }
+
+                @keyframes sk-bounce {
+
+                    0%,
+                    100% {
+                        transform: scale(0.0);
+                        -webkit-transform: scale(0.0);
+                    }
+
+                    50% {
+                        transform: scale(1.0);
+                        -webkit-transform: scale(1.0);
+                    }
+                }
+            </style>
+            <div class="spinner">
+                <div class="dot1"></div>
+                <div class="dot2"></div>
+            </div>
+        </div>
+        <div class="container hide" id="login">
+            <br />
+            <br />
+            <br />
+            <input class="input" type="text" placeholder="Who to watch (Leave blank to watch your stream)"
+                id="target" />
+            <br />
+            <br />
+            <br />
+            <input class="input" type="text" placeholder="Username" id="username" />
+            <input class="input" type="password" placeholder="Password" id="password" />
+            <div class="hide" id="2fadiv">
+                <span>Please enter the 2FA code that was sent to you.</span>
+                <input class="input" type="text" placeholder="2 Factor Code" id="2fa" />
+            </div>
+            <input class="button" type="submit" value="Login" id="loginbutton" />
+            <input class="button" type="submit" value="View anonymously" id="loginanon" />
+        </div>
+        <div class="hide" id="page">
+            <div id="donationsbox">
+                <!-- TODO -->
+            </div>
+            <div id="chatbox"></div>
+            <div id="send">
+                <input class="input" type="text" placeholder="Send a message" id="message" />
+                <input class="button" type="submit" value="Send" id="sendbutton" />
+            </div>
+            <div id="jump" class="hide">
+                <a onclick="jumpbottom();">
+                    <ion-icon name="arrow-down-circle"></ion-icon>
+                </a>
+            </div>
+            <button class="button" id="signout">Signout</button>
         </div>
     </body>
 
