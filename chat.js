@@ -12,7 +12,7 @@ let user = getCookie("watching");
 let caid;
 
 function postLogin() {
-    if (!user) {
+    if (!user || (user.length == 0)) {
         user = document.querySelector("#target").value;
 
         if (user.length == 0) {
@@ -20,6 +20,7 @@ function postLogin() {
         }
 
         setCookie("watching", user);
+        koi.addUser(user);
     }
 
     getUser(user).then((user) => {
@@ -27,13 +28,15 @@ function postLogin() {
     });
 }
 
-console.log("Vertical chat v1.1.1 https://github.com/e3ndr/VerticalChat");
+console.log("Vertical chat v1.1.2 https://github.com/e3ndr/VerticalChat");
+console.log("Changelog:");
 console.log(" - Supports chat messages");
 console.log(" - Supports shares");
 console.log(" - Supports donations");
 console.log(" - Supports viewers");
 console.log(" - Supports sending messages");
 console.log(" - Fixed signout bug");
+console.log(" - Fixed anonymous bug");
 
 window.addEventListener("scroll", checkScroll);
 
