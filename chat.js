@@ -11,7 +11,7 @@ let userColors = {
 let user;
 let caid;
 
-console.log("Vertical chat v1.3.0 https://github.com/e3ndr/VerticalChat");
+console.log("Vertical chat v1.3.1 https://github.com/e3ndr/VerticalChat");
 
 caffeine.login();
 

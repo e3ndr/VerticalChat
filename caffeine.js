@@ -152,7 +152,7 @@ class Caffeine {
         }
 
         getUser(caid).then((user) => {
-            addStatus(user.username, "leave");
+            addStatus(user.username, "https://images.caffeine.tv" + user.avatar_image_path, "leave");
         });
     }
 
