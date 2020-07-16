@@ -11,7 +11,7 @@ let userColors = {
 let user;
 let caid;
 
-console.log("Vertical chat v1.2.0 https://github.com/e3ndr/VerticalChat");
+console.log("Vertical chat v1.2.1 https://github.com/e3ndr/VerticalChat");
 
 caffeine.login();
 
@@ -91,7 +91,6 @@ function togglePage() {
             document.querySelector("#send").classList.add("hide");
         } else {
             caffeine.connectViewers();
-            document.querySelector("#viewerCount").classList.remove("hide");
         }
 
         document.querySelector("#choose").classList.add("hide");

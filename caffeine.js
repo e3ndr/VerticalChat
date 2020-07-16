@@ -103,6 +103,8 @@ class Caffeine {
                     };
                     let ws = new WebSocket("wss://realtime.caffeine.tv/v2/reaper/stages/" + instance.credential.caid.substring(4) + "/viewers");
 
+                    document.querySelector("#viewerCount").classList.remove("hide");
+
                     ws.onopen = function () {
                         ws.send(JSON.stringify(payload));
                         setInterval(function () {
