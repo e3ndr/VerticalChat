@@ -140,7 +140,7 @@ class Caffeine {
         this.viewers.push(caid);
 
         getUser(caid).then((user) => {
-            addStatus(user.username, "join");
+            addStatus(user.username, "https://images.caffeine.tv" + user.avatar_image_path, "join");
         });
     }
 

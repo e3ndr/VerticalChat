@@ -11,7 +11,7 @@ let userColors = {
 let user;
 let caid;
 
-console.log("Vertical chat v1.2.1 https://github.com/e3ndr/VerticalChat");
+console.log("Vertical chat v1.3.0 https://github.com/e3ndr/VerticalChat");
 
 caffeine.login();
 
@@ -24,19 +24,19 @@ koi.addEventListener("open", () => {
 })
 
 koi.addEventListener("chat", (event) => {
-    addMessage(event.sender.username, event.message, event.id);
+    addMessage(event.sender.username, event.sender.image_link, event.message, event.id);
 });
 
 koi.addEventListener("share", (event) => {
-    addMessage(event.sender.username, event.message, event.id);
+    addMessage(event.sender.username, event.sender.image_link, event.message, event.id);
 });
 
 koi.addEventListener("donation", (event) => {
-    addMessage(event.sender.username, event.message, event.id, event.image);
+    addMessage(event.sender.username, event.sender.image_link, event.message, event.id, event.image);
 });
 
 koi.addEventListener("follow", (event) => {
-    addStatus(event.follower.username, "follow");
+    addStatus(event.follower.username, event.sender.image_link, event.sender.image_link, "follow");
 });
 
 function submitMessage() {
@@ -56,6 +56,7 @@ document.querySelector("#message").addEventListener("keyup", (e) => {
 
 function watch() {
     user = document.querySelector("#target").value;
+    setCookie("watching", user);
     koi.addUser(user);
 
     getUser(user).then((user) => {
@@ -117,10 +118,14 @@ function getColor(username) {
     }
 }
 
-function addMessage(sender, message, id, imageLink) {
+function addMessage(sender, profilePic, message, id, imageLink) {
     let div = document.createElement("div");
     let username = document.createElement("span");
+    let pfp = document.createElement("img");
     let text = document.createElement("span");
+
+    pfp.src = profilePic;
+    pfp.classList.add("profilepic");
 
     username.classList.add("username");
     username.style = "color: " + getColor(sender) + ";";
@@ -131,6 +136,7 @@ function addMessage(sender, message, id, imageLink) {
 
     div.classList.add("chatmessage");
     div.setAttribute("id", id);
+    div.appendChild(pfp);
     div.appendChild(username);
     div.appendChild(text);
 
@@ -152,10 +158,14 @@ function addMessage(sender, message, id, imageLink) {
     }
 }
 
-function addStatus(user, type) {
+function addStatus(user, profilePic, type) {
     let div = document.createElement("div");
+    let pfp = document.createElement("img");
     let username = document.createElement("span");
     let text = document.createElement("span");
+
+    pfp.src = profilePic;
+    pfp.classList.add("profilepic");
 
     username.classList.add("username");
     username.style = "color: " + getColor(user) + ";";
@@ -170,6 +180,7 @@ function addStatus(user, type) {
 
     div.classList.add("chatmessage");
     div.classList.add("status");
+    div.appendChild(pfp);
     div.appendChild(username);
     div.appendChild(text);
 
