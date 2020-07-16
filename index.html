@@ -78,10 +78,6 @@
                 color: white;
             }
 
-            .input::placeholder {
-                color: grey;
-            }
-
             .status {
                 font-style: italic;
             }
@@ -125,10 +121,20 @@
                 right: 0;
             }
 
-            #send input {
+            .button {
                 border-color: black;
                 background-color: rgb(25, 25, 25);
                 color: white;
+            }
+
+            .input {
+                border-color: black;
+                background-color: rgb(25, 25, 25);
+                color: white;
+            }
+
+            .input::placeholder {
+                color: grey;
             }
 
             #signout {
@@ -140,14 +146,17 @@
                 color: white;
             }
 
-            #login {
-                width: 25vw;
-            }
-
-            #login input {
+            #viewerCount {
+                position: fixed;
+                right: 15px;
+                top: 55px;
                 border-color: black;
                 background-color: rgb(25, 25, 25);
                 color: white;
+            }
+
+            #login {
+                width: 25vw;
             }
         </style>
         <script src="https://unpkg.com/ionicons@5.1.2/dist/ionicons.js"></script>
@@ -235,15 +244,11 @@
                 <div class="dot2"></div>
             </div>
         </div>
+        <div class="container hide" id="choose">
+            <input class="input" type="text" placeholder="Who to watch" id="target" />
+            <input class="button" type="submit" value="Watch" id="watchbutton" />
+        </div>
         <div class="container hide" id="login">
-            <br />
-            <br />
-            <br />
-            <input class="input" type="text" placeholder="Who to watch (Leave blank to watch your stream)"
-                id="target" />
-            <br />
-            <br />
-            <br />
             <input class="input" type="text" placeholder="Username" id="username" />
             <input class="input" type="password" placeholder="Password" id="password" />
             <div class="hide" id="2fadiv">
@@ -268,6 +273,10 @@
                 </a>
             </div>
             <button class="button" id="signout">Signout</button>
+            <div id="viewerCount" class="hide">
+                <ion-icon name="eye"></ion-icon>
+                <span id="viewers">0</span>
+            </div>
         </div>
     </body>
 

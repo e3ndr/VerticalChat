@@ -1,17 +1,16 @@
 class Caffeine {
-    #credential = {};
-    #signed = "";
+    credential = {};
+    signed = "";
     connected = false;
     loggedIn = false;
     viewers = [];
 
     login() {
-        if (checkCookie("refresh_token") && checkCookie("watching")) {
-            postLogin();
+        if (checkCookie("refresh_token")) {
             this.refresh();
         } else {
             this.loggedIn = false;
-            this.togglePage();
+            togglePage();
 
             let instance = this;
 
@@ -35,7 +34,6 @@ class Caffeine {
                     if (response.hasOwnProperty("next")) {
                         document.getElementById("2fadiv").classList.remove("hide");
                     } else if (!response.hasOwnProperty("errors")) {
-                        postLogin();
                         setCookie("refresh_token", response.refresh_token);
                         instance.refresh();
                     }
@@ -50,14 +48,14 @@ class Caffeine {
 
     sendMessage(message) {
         let messagePayload = {
-            "publisher": this.#signed,
+            "publisher": this.signed,
             "type": "reaction",
             "body": {
                 "text": message
             }
         };
 
-        httpPost(CORS_PROXY + "https://realtime.caffeine.tv/v2/reaper/stages/" + caid.substring(4) + "/messages", messagePayload, this.#credential.access_token);
+        httpPost(CORS_PROXY + "https://realtime.caffeine.tv/v2/reaper/stages/" + caid.substring(4) + "/messages", messagePayload, this.credential.access_token);
     }
 
     refresh() {
@@ -68,19 +66,18 @@ class Caffeine {
             };
 
             httpPost(CORS_PROXY + "https://api.caffeine.tv/v1/account/token", refreshPayload).then((response) => {
-                instance.#credential = JSON.parse(response);
+                instance.credential = JSON.parse(response);
 
-                if (!instance.#credential.hasOwnProperty("errors")) {
-                    httpGet(CORS_PROXY + "https://api.caffeine.tv/v1/users/" + instance.#credential.caid + "/signed", instance.#credential.access_token).then((signed) => {
-                        instance.#signed = signed.token;
+                if (!instance.credential.hasOwnProperty("errors")) {
+                    httpGet(CORS_PROXY + "https://api.caffeine.tv/v1/users/" + instance.credential.caid + "/signed", instance.credential.access_token).then((signed) => {
+                        instance.signed = signed.token;
 
                         setInterval(() => {
                             instance.refresh();
                         }, (10 * 60) * 1000);
 
                         instance.loggedIn = true;
-                        instance.togglePage();
-                        instance.connectViewers();
+                        togglePage();
                     });
                 } else {
                     deleteCookie("refresh_token");
@@ -90,32 +87,21 @@ class Caffeine {
         }
     }
 
-    togglePage() {
-        document.querySelector("#loading").classList.add("hide");
-        if (this.loggedIn) {
-            document.querySelector("#login").classList.add("hide");
-            document.querySelector("#page").classList.remove("hide");
-        } else {
-            document.querySelector("#login").classList.remove("hide");
-            document.querySelector("#page").classList.add("hide");
-        }
-    }
-
     connectViewers() {
         if (!this.connected) {
             this.connected = true;
             let instance = this;
 
             getUser(user).then((watching) => {
-                if (watching.caid == instance.#credential.caid) {
+                if (watching.caid == instance.credential.caid) {
                     let payload = {
                         "Headers": {
-                            "Authorization": "Bearer " + instance.#credential.credentials.access_token,
+                            "Authorization": "Bearer " + instance.credential.credentials.access_token,
                             "X-Client-Type": "external"
                         },
-                        "Body": "{\"user\":\"" + instance.#signed + "\"}"
+                        "Body": "{\"user\":\"" + instance.signed + "\"}"
                     };
-                    let ws = new WebSocket("wss://realtime.caffeine.tv/v2/reaper/stages/" + instance.#credential.caid.substring(4) + "/viewers");
+                    let ws = new WebSocket("wss://realtime.caffeine.tv/v2/reaper/stages/" + instance.credential.caid.substring(4) + "/viewers");
 
                     ws.onopen = function () {
                         ws.send(JSON.stringify(payload));
@@ -129,7 +115,9 @@ class Caffeine {
                         if (message_raw != ("\"THANKS\"")) {
                             let json = JSON.parse(message_raw);
 
-                            if (json.hasOwnProperty("user_event")) {
+                            if (json.hasOwnProperty("total_user_count")) {
+                                document.querySelector("#viewers").innerText = json.total_user_count - 1; // Sub 1 for Koi
+                            } else if (json.hasOwnProperty("user_event")) {
                                 let status = json.user_event.is_viewing;
                                 let viewing = instance.viewers.includes(json.user_event.caid);
 

@@ -8,37 +8,10 @@ let userColors = {
     "ItzLcyx": "deeppink",
     "Helvijs": "paleturquoise"
 };
-let user = getCookie("watching");
+let user;
 let caid;
 
-function postLogin() {
-    if (!user || (user.length == 0)) {
-        user = document.querySelector("#target").value;
-
-        if (user.length == 0) {
-            user = document.querySelector("#username").value;
-        }
-
-        setCookie("watching", user);
-        koi.addUser(user);
-    }
-
-    getUser(user).then((user) => {
-        caid = user.caid;
-    });
-}
-
-console.log("Vertical chat v1.1.2 https://github.com/e3ndr/VerticalChat");
-console.log("Changelog:");
-console.log(" - Supports chat messages");
-console.log(" - Supports shares");
-console.log(" - Supports donations");
-console.log(" - Supports viewers");
-console.log(" - Supports sending messages");
-console.log(" - Fixed signout bug");
-console.log(" - Fixed anonymous bug");
-
-window.addEventListener("scroll", checkScroll);
+console.log("Vertical chat v1.2.0 https://github.com/e3ndr/VerticalChat");
 
 caffeine.login();
 
@@ -72,6 +45,8 @@ function submitMessage() {
     document.querySelector("#message").value = "";
 }
 
+window.addEventListener("scroll", checkScroll);
+
 document.querySelector("#sendbutton").addEventListener("click", submitMessage);
 document.querySelector("#message").addEventListener("keyup", (e) => {
     if (e.key == "Enter") {
@@ -79,11 +54,28 @@ document.querySelector("#message").addEventListener("keyup", (e) => {
     }
 });
 
+function watch() {
+    user = document.querySelector("#target").value;
+    koi.addUser(user);
+
+    getUser(user).then((user) => {
+        caid = user.caid;
+    });
+
+    togglePage();
+}
+
+document.querySelector("#target").value = getCookie("watching");
+document.querySelector("#watchbutton").addEventListener("click", watch);
+document.querySelector("#target").addEventListener("keyup", (e) => {
+    if (e.key == "Enter") {
+        watch();
+    }
+});
+
 document.querySelector("#loginanon").addEventListener("click", () => {
-    postLogin();
-    document.querySelector("#send").classList.add("hide");
     document.querySelector("#login").classList.add("hide");
-    document.querySelector("#page").classList.remove("hide");
+    document.querySelector("#choose").classList.remove("hide");
 });
 
 document.querySelector("#signout").addEventListener("click", () => {
@@ -91,6 +83,28 @@ document.querySelector("#signout").addEventListener("click", () => {
     deleteCookie("watching");
     window.location.reload();
 });
+
+function togglePage() {
+    document.querySelector("#loading").classList.add("hide");
+    if (user) {
+        if (!caffeine.loggedIn) {
+            document.querySelector("#send").classList.add("hide");
+        } else {
+            caffeine.connectViewers();
+            document.querySelector("#viewerCount").classList.remove("hide");
+        }
+
+        document.querySelector("#choose").classList.add("hide");
+        document.querySelector("#page").classList.remove("hide");
+    } else if (caffeine.loggedIn) {
+        document.querySelector("#login").classList.add("hide");
+        document.querySelector("#choose").classList.remove("hide");
+    } else {
+        document.querySelector("#login").classList.remove("hide");
+        document.querySelector("#page").classList.add("hide");
+    }
+}
+
 
 function getColor(username) {
     if (userColors[username]) {
