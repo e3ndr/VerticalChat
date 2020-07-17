@@ -1,6 +1,7 @@
 const CORS_PROXY = "https://cors-anywhere.herokuapp.com/";
 const koi = new Koi("wss://live.casterlabs.co/koi");
 const caffeine = new Caffeine();
+const stats = new Stats();
 
 let colors = ["#E6194B", "#3CB44B", "#FFE119", "#4363D8", "#F58231", "#911EB4", "#46F0F0", "#F032E6", "#BCF60C", "#FABEBE", "#008080", "#E6BEFF", "#9A6324", "#800000", "#AAFFC3", "#808000", "#000075"];
 let userColors = {
@@ -11,7 +12,7 @@ let userColors = {
 let user;
 let caid;
 
-console.log("Vertical chat v1.3.1 https://github.com/e3ndr/VerticalChat");
+console.log("Vertical chat v1.4.0 https://github.com/e3ndr/VerticalChat");
 
 caffeine.login();
 
@@ -81,8 +82,15 @@ document.querySelector("#loginanon").addEventListener("click", () => {
 
 document.querySelector("#signout").addEventListener("click", () => {
     deleteCookie("refresh_token");
-    deleteCookie("watching");
     window.location.reload();
+});
+
+document.querySelector("#wrapopen").addEventListener("click", () => {
+    document.querySelector(".wrapdiv").classList.remove("hide");
+});
+
+document.querySelector("#wrapclose").addEventListener("click", () => {
+    document.querySelector(".wrapdiv").classList.add("hide");
 });
 
 function togglePage() {

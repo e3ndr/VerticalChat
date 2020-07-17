@@ -38,7 +38,7 @@ class Caffeine {
                         instance.refresh();
                     }
                 });
-            })
+            });
         }
     }
 
@@ -103,7 +103,8 @@ class Caffeine {
                     };
                     let ws = new WebSocket("wss://realtime.caffeine.tv/v2/reaper/stages/" + instance.credential.caid.substring(4) + "/viewers");
 
-                    document.querySelector("#viewerCount").classList.remove("hide");
+                    document.querySelector("#stats").classList.remove("hide");
+                    stats.enabled = true;
 
                     ws.onopen = function () {
                         ws.send(JSON.stringify(payload));

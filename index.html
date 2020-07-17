@@ -2,6 +2,7 @@
 <html>
 
     <head>
+        <meta charset="UTF-8">
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600&display=swap" rel="stylesheet" />
         <link href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.0/css/bulma.css" rel="stylesheet" />
         <style>
@@ -157,21 +158,67 @@
                 color: white;
             }
 
-            #viewerCount {
+            #stats {
                 position: fixed;
                 right: 15px;
                 top: 55px;
-                border-color: black;
-                background-color: rgb(25, 25, 25);
-                color: white;
             }
 
             #login {
                 width: 25vw;
             }
+
+            .right {
+                float: right;
+            }
+
+            #wrap {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+                min-height: 100%;
+            }
+
+            .wrapdiv {
+                width: 400px;
+                position: fixed;
+                top: 100px;
+                border-radius: 15px;
+                background-color: black;
+                padding: 20px;
+            }
+
+            .hide .wrapdiv {
+                display: none;
+            }
+
+            #choose {
+                padding: 75px;
+            }
+
+            #wrapopen {
+                position: fixed;
+                right: 15px;
+                top: 125px;
+                color: white;
+            }
+
+            .hide #wrapopen {
+                display: none;
+            }
+
+            #wrapclose {
+                position: relative;
+                float: right;
+                top: 0px;
+                color: white;
+            }
         </style>
         <script src="https://unpkg.com/ionicons@5.1.2/dist/ionicons.js"></script>
         <script src="koi.js"></script>
+        <script src="stats.js"></script>
         <script src="caffeine.js"></script>
     </head>
 
@@ -284,9 +331,65 @@
                 </a>
             </div>
             <button class="button" id="signout">Signout</button>
-            <div id="viewerCount" class="hide">
-                <ion-icon name="eye"></ion-icon>
-                <span id="viewers">0</span>
+            <div id="stats" class="hide">
+                <div>
+                    <ion-icon name="eye"></ion-icon>
+                    <span class="right" id="viewers">0</span>
+                </div>
+                <div>
+                    <ion-icon name="person"></ion-icon>
+                    <span class="right" id="followersGained">0</span>
+                </div>
+                <div>
+                    <span>&nbsp;$</span>
+                    <span class="right" id="moneyMade">0</span>
+                </div>
+            </div>
+        </div>
+        <div id="wrap" class="hide">
+            <a id="wrapopen">
+                Congrats on the stream 🎉
+            </a>
+            <div class="wrapdiv">
+                <a id="wrapclose">
+                    <ion-icon name="close"></ion-icon>
+                </a>
+                <div>
+                    <br />
+                    <span>
+                        That's a wrap!
+                        <br />
+                        You had...
+                    </span>
+                    <br />
+                    <br />
+                </div>
+                <div>
+                    <span>
+                        Had an average of
+                        <span id="wrapaverage">
+                            0
+                        </span>
+                        viewers,
+                    </span>
+                </div>
+                <div>
+                    <span>
+                        Gained
+                        <span id="wrapfollowers">
+                            0
+                        </span>
+                        followers,
+                    </span>
+                </div>
+                <div>
+                    <span>
+                        and you made
+                        <span id="wrapmoney">
+                            $1
+                        </span>
+                    </span>
+                </div>
             </div>
         </div>
     </body>
