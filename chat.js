@@ -12,7 +12,7 @@ let userColors = {
 let user;
 let caid;
 
-console.log("Vertical chat v1.4.0 https://github.com/e3ndr/VerticalChat");
+console.log("Vertical chat v1.4.1 https://github.com/e3ndr/VerticalChat");
 
 caffeine.login();
 
@@ -231,4 +231,9 @@ function checkScroll() {
 
 function jumpbottom() {
     window.scrollTo(0, document.body.scrollHeight + 1000);
+}
+
+function fakeLive(status) {
+    koi.broadcast("streamstatus", { is_live: !status });
+    koi.broadcast("streamstatus", { is_live: status });
 }

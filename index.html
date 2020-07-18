@@ -79,6 +79,8 @@
 
             ion-icon {
                 color: white;
+                width: 30px;
+                height: 30px;
             }
 
             .status {
@@ -162,6 +164,8 @@
                 position: fixed;
                 right: 15px;
                 top: 55px;
+                min-width: 50px;
+                font-size: 25px;
             }
 
             #login {
@@ -182,12 +186,19 @@
             }
 
             .wrapdiv {
-                width: 400px;
+                min-width: 275px;
                 position: fixed;
                 top: 100px;
                 border-radius: 15px;
                 background-color: black;
                 padding: 20px;
+            }
+
+            @media only screen and (max-width: 1024px) {
+                .wrapdiv {
+                    font-size: 2rem;
+                    width: 70%;
+                }
             }
 
             .hide .wrapdiv {
@@ -201,7 +212,7 @@
             #wrapopen {
                 position: fixed;
                 right: 15px;
-                top: 125px;
+                top: 175px;
                 color: white;
             }
 
@@ -371,6 +382,15 @@
                             0
                         </span>
                         viewers,
+                    </span>
+                </div>
+                <div>
+                    <span>
+                        With
+                        <span id="wrapmessages">
+                            0
+                        </span>
+                        chat messages,
                     </span>
                 </div>
                 <div>

@@ -1,13 +1,14 @@
 
 class Stats {
-    enabled = false;
-    chatMessages = 0;
-    averageViewers = 0;
-    moneyMade = 0;
-    newFollowers = 0;
-    isLive = false;
 
     constructor() {
+        this.enabled = false;
+        this.chatMessages = 0;
+        this.averageViewers = 0;
+        this.moneyMade = 0;
+        this.newFollowers = 0;
+        this.isLive = false;
+
         let instance = this;
 
         koi.addEventListener("chat", () => {

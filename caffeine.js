@@ -1,9 +1,12 @@
 class Caffeine {
-    credential = {};
-    signed = "";
-    connected = false;
-    loggedIn = false;
-    viewers = [];
+
+    constructor() {
+        this.credential = {};
+        this.signed = "";
+        this.connected = false;
+        this.loggedIn = false;
+        this.viewers = [];
+    }
 
     login() {
         if (checkCookie("refresh_token")) {
