@@ -11,19 +11,13 @@ class Stats {
 
         let instance = this;
 
-        koi.addEventListener("chat", () => {
-            if (instance.enabled) {
-                instance.chatMessages++;
-            }
-        });
-
         koi.addEventListener("streamstatus", (event) => {
             if (instance.isLive != event.is_live) {
                 instance.isLive = event.is_live;
 
                 if (instance.isLive) {
                     document.querySelector("#wrap").classList.add("hide");
-                } else {
+                } else if (instance.enabled) {
                     document.querySelector("#wrapaverage").innerText = instance.averageViewers.toFixed(0);
                     document.querySelector("#wrapfollowers").innerText = instance.newFollowers.toFixed(0);
                     document.querySelector("#wrapmoney").innerText = "$" + (Math.round(instance.moneyMade * 100) / 100).toFixed(2);
@@ -38,6 +32,12 @@ class Stats {
             if (instance.enabled) {
                 instance.moneyMade += event.usd_equivalent;
                 document.querySelector("#moneyMade").innerText = (Math.round(instance.moneyMade * 100) / 100).toFixed(2);
+            }
+        });
+
+        koi.addEventListener("chat", () => {
+            if (instance.enabled) {
+                instance.chatMessages++;
             }
         });
 

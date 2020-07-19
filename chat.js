@@ -12,7 +12,7 @@ let userColors = {
 let user;
 let caid;
 
-console.log("Vertical chat v1.4.1 https://github.com/e3ndr/VerticalChat");
+console.log("Vertical chat v1.4.2 https://github.com/e3ndr/VerticalChat");
 
 caffeine.login();
 
@@ -37,7 +37,7 @@ koi.addEventListener("donation", (event) => {
 });
 
 koi.addEventListener("follow", (event) => {
-    addStatus(event.follower.username, event.sender.image_link, event.sender.image_link, "follow");
+    addStatus(event.follower.username, event.follower.image_link, "follow");
 });
 
 function submitMessage() {
