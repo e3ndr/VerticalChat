@@ -1,4 +1,3 @@
-const CORS_PROXY = "https://cors-anywhere.herokuapp.com/";
 const koi = new Koi("wss://live.casterlabs.co/koi");
 const caffeine = new Caffeine();
 const stats = new Stats();
@@ -12,7 +11,7 @@ let userColors = {
 let user;
 let caid;
 
-console.log("Vertical chat v1.4.2 https://github.com/e3ndr/VerticalChat");
+console.log("Vertical chat v1.5.0 https://github.com/e3ndr/VerticalChat");
 
 caffeine.login();
 

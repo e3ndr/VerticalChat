@@ -1,3 +1,5 @@
+let CORS_PROXY = "https://cors-anywhere.herokuapp.com/";
+
 class Caffeine {
 
     constructor() {
@@ -248,3 +250,4 @@ function checkCookie(cname) {
 
     return (cookie != null) ? (cookie.length != 0) : false;
 }
+
