@@ -6,13 +6,45 @@
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600&display=swap" rel="stylesheet" />
         <link href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.0/css/bulma.css" rel="stylesheet" />
         <style>
+            html {
+                background-color: rgb(14, 14, 14);
+            }
+
+            ::-webkit-scrollbar {
+                width: 8px;
+                height: 3px;
+            }
+
+            ::-webkit-scrollbar-button {
+                background-color: rgb(14, 14, 14);
+            }
+
+            ::-webkit-scrollbar-track {
+                background-color: rgb(14, 14, 14);
+            }
+
+            ::-webkit-scrollbar-track-piece {
+                background-color: rgb(14, 14, 14);
+            }
+
+            ::-webkit-scrollbar-thumb {
+                height: 50px;
+                background-color: #444444;
+                border-radius: 3px;
+            }
+
+            ::-webkit-scrollbar-corner {
+                background-color: rgb(14, 14, 14);
+            }
+            }
+
+            ::-webkit-resizer {
+                background-color: rgb(14, 14, 14);
+            }
+
             span {
                 font-family: "Inter", sans-serif;
                 color: white;
-            }
-
-            html {
-                background-color: rgb(14, 14, 14);
             }
 
             .chatmessage {
@@ -226,6 +258,44 @@
                 top: 0px;
                 color: white;
             }
+
+            #list {
+                position: fixed;
+                border-radius: 15px;
+                background-color: black;
+                resize: both;
+                overflow: scroll;
+                min-width: 200px;
+                min-height: 400px;
+                top: 50px;
+                right: 100px;
+            }
+
+            #viewerlist {
+                position: relative;
+                width: auto;
+                height: auto;
+                right: 5px;
+                left: 0px;
+                bottom: 0px;
+                top: 35px;
+                font-size: 1rem;
+            }
+
+            #listopen {
+                position: fixed;
+                right: 15px;
+                top: 175px;
+                color: white;
+                font-size: 1rem;
+            }
+
+            #listclose {
+                position: absolute;
+                right: 0;
+                top: 0px;
+                color: white;
+            }
         </style>
         <script src="https://unpkg.com/ionicons@5.1.2/dist/ionicons.js"></script>
         <script src="koi.js"></script>
@@ -344,18 +414,30 @@
             </div>
             <button class="button" id="signout">Signout</button>
             <div id="stats" class="hide">
-                <div>
+                <div id="list" class="hide">
+                    <div id="viewerlist"></div>
+                    <a id="listclose">
+                        <ion-icon name="close"></ion-icon>
+                    </a>
+                </div>
+                <span title="Viewers">
                     <ion-icon name="eye"></ion-icon>
                     <span class="right" id="viewers">0</span>
-                </div>
-                <div>
+                </span>
+                <br />
+                <span title="New Followers">
                     <ion-icon name="person"></ion-icon>
                     <span class="right" id="followersGained">0</span>
-                </div>
-                <div>
+                </span>
+                <br />
+                <span title="Money Made">
                     <span>&nbsp;$</span>
                     <span class="right" id="moneyMade">0</span>
-                </div>
+                </span>
+                <br />
+                <a id="listopen">
+                    Viewers
+                </a>
             </div>
         </div>
         <div id="wrap" class="hide">

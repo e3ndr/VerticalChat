@@ -11,7 +11,7 @@ let userColors = {
 let user;
 let caid;
 
-console.log("Vertical chat v1.5.0 https://github.com/e3ndr/VerticalChat");
+console.log("Vertical chat v1.6.0 https://github.com/e3ndr/VerticalChat");
 
 caffeine.login();
 
@@ -87,9 +87,15 @@ document.querySelector("#signout").addEventListener("click", () => {
 document.querySelector("#wrapopen").addEventListener("click", () => {
     document.querySelector(".wrapdiv").classList.remove("hide");
 });
-
 document.querySelector("#wrapclose").addEventListener("click", () => {
     document.querySelector(".wrapdiv").classList.add("hide");
+});
+
+document.querySelector("#listopen").addEventListener("click", () => {
+    document.querySelector("#list").classList.remove("hide");
+});
+document.querySelector("#listclose").addEventListener("click", () => {
+    document.querySelector("#list").classList.add("hide");
 });
 
 function togglePage() {
@@ -198,6 +204,31 @@ function addStatus(user, profilePic, type) {
     if (isAtBottom()) {
         jumpbottom();
     }
+}
+
+function removeViewerFromlist(user) {
+    document.querySelector("[viewer=" + user + "]").remove();
+}
+
+function addViewerToList(user, profilePic) {
+    let div = document.createElement("div");
+    let pfp = document.createElement("img");
+    let username = document.createElement("span");
+
+    pfp.src = profilePic;
+    pfp.classList.add("profilepic");
+    pfp.classList.add("chatimage");
+
+    username.classList.add("username");
+    username.style = "color: " + getColor(user) + ";";
+    username.innerText = user;
+
+    div.setAttribute("viewer", user)
+    div.classList.add("chatmessage");
+    div.appendChild(pfp);
+    div.appendChild(username);
+
+    document.querySelector("#viewerlist").appendChild(div);
 }
 
 function sleep(ms) {

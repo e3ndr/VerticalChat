@@ -146,6 +146,7 @@ class Caffeine {
         this.viewers.push(caid);
 
         getUser(caid).then((user) => {
+            addViewerToList(user.username, "https://images.caffeine.tv" + user.avatar_image_path);
             addStatus(user.username, "https://images.caffeine.tv" + user.avatar_image_path, "join");
         });
     }
@@ -158,6 +159,7 @@ class Caffeine {
         }
 
         getUser(caid).then((user) => {
+            removeViewerFromlist(user.username);
             addStatus(user.username, "https://images.caffeine.tv" + user.avatar_image_path, "leave");
         });
     }
@@ -217,36 +219,20 @@ function httpPost(url, body, credential) {
     });
 }
 
-function getCookie(cname) {
-    var name = cname + "=";
-    var decodedCookie = decodeURIComponent(document.cookie);
-    var ca = decodedCookie.split(" ");
-
-    for (var i = 0; i < ca.length; i++) {
-        var c = ca[i];
-
-        while (c.charAt(0) == " ") {
-            c = c.substring(1);
-        }
-
-        if (c.indexOf(name) == 0) {
-            return c.substring(name.length, c.length).replace(";", "");
-        }
-    }
-
-    return null;
+function getCookie(name) {
+    return localStorage.getItem(name);
 }
 
 function setCookie(name, value) {
-    document.cookie = name + "=" + value + "; path=/";
+    localStorage.setItem(name, value);
 }
 
 function deleteCookie(name) {
     setCookie(name, "");
 }
 
-function checkCookie(cname) {
-    let cookie = getCookie(cname);
+function checkCookie(name) {
+    let cookie = getCookie(name);
 
     return (cookie != null) ? (cookie.length != 0) : false;
 }
