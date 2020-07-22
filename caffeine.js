@@ -8,6 +8,7 @@ class Caffeine {
         this.connected = false;
         this.loggedIn = false;
         this.viewers = [];
+        this.knownViewers = [];
     }
 
     login() {
@@ -143,12 +144,18 @@ class Caffeine {
     }
 
     addViewer(caid) {
-        this.viewers.push(caid);
+        if (!this.viewers.includes(caid)) {
+            this.viewers.push(caid);
 
-        getUser(caid).then((user) => {
-            addViewerToList(user.username, "https://images.caffeine.tv" + user.avatar_image_path);
-            addStatus(user.username, "https://images.caffeine.tv" + user.avatar_image_path, "join");
-        });
+            if (!this.knownViewers.includes(caid)) {
+                this.knownViewers.push(caid);
+
+                getUser(caid).then((user) => {
+                    addViewerToList(user.username, "https://images.caffeine.tv" + user.avatar_image_path);
+                    addStatus(user.username, "https://images.caffeine.tv" + user.avatar_image_path, "join");
+                });
+            }
+        }
     }
 
     removeViewer(caid) {
@@ -156,12 +163,17 @@ class Caffeine {
 
         if (index > -1) {
             this.viewers.splice(index, 1);
-        }
 
-        getUser(caid).then((user) => {
-            removeViewerFromlist(user.username);
-            addStatus(user.username, "https://images.caffeine.tv" + user.avatar_image_path, "leave");
-        });
+            setTimeout(() => {
+                if (!this.viewers.includes(caid)) {
+                    getUser(caid).then((user) => {
+                        this.knownViewers.splice(this.knownViewers.indexOf(caid), 1);
+                        removeViewerFromlist(user.username);
+                        addStatus(user.username, "https://images.caffeine.tv" + user.avatar_image_path, "leave");
+                    });
+                }
+            }, 500); // Prevent users from constantly popping.
+        }
     }
 
 }

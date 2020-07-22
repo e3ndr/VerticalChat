@@ -11,7 +11,7 @@ let userColors = {
 let user;
 let caid;
 
-console.log("Vertical chat v1.6.0 https://github.com/e3ndr/VerticalChat");
+console.log("Vertical chat v1.5.1 https://github.com/e3ndr/VerticalChat");
 
 caffeine.login();
 
@@ -260,7 +260,7 @@ function checkScroll() {
 }
 
 function jumpbottom() {
-    window.scrollTo(0, document.body.scrollHeight + 1000);
+    window.scrollTo(0, document.querySelector("#chatbox").scrollHeight + 1000);
 }
 
 function fakeLive(status) {
