@@ -180,7 +180,7 @@ class Caffeine {
 
 function getUser(id) {
     return new Promise((resolve) => {
-        httpGet("https://api.casterlabs.co/caffeine/user.php?user=" + id).then((userdata) => {
+        httpGet("https://api.casterlabs.co/proxy/caffeine/user/" + id).then((userdata) => { // We use Casterlabs' proxy here because there's no ratelimit
             resolve(userdata.user);
         });
     });
